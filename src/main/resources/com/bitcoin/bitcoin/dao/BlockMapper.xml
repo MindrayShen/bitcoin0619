@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bitcoin.bitcoin.dao.BlockMapper">
+  <resultMap id="BaseResultMap" type="com.bitcoin.bitcoin.po.Block">
+    <id column="blockhash" jdbcType="CHAR" property="blockhash" />
+    <result column="height" jdbcType="INTEGER" property="height" />
+    <result column="time" jdbcType="TIMESTAMP" property="time" />
+    <result column="transactions" jdbcType="SMALLINT" property="transactions" />
+    <result column="miner" jdbcType="VARCHAR" property="miner" />
+    <result column="size" jdbcType="REAL" property="size" />
+    <result column="outputtotal" jdbcType="REAL" property="outputtotal" />
+    <result column="merkleroot" jdbcType="CHAR" property="merkleroot" />
+    <result column="estimated" jdbcType="REAL" property="estimated" />
+    <result column="fees" jdbcType="REAL" property="fees" />
+    <result column="difficulty" jdbcType="DOUBLE" property="difficulty" />
+    <result column="weight" jdbcType="REAL" property="weight" />
+    <result column="bits" jdbcType="VARCHAR" property="bits" />
+    <result column="version" jdbcType="VARCHAR" property="version" />
+    <result column="nonce" jdbcType="INTEGER" property="nonce" />
+    <result column="next_block" jdbcType="CHAR" property="nextBlock" />
+    <result column="prev_block" jdbcType="CHAR" property="prevBlock" />
+    <result column="blockreward" jdbcType="REAL" property="blockreward" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    blockhash, height, time, transactions, miner, size, outputtotal, merkleroot, estimated,
+    fees, difficulty, weight, bits, version, nonce, next_block, prev_block, blockreward
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from block
+    where blockhash = #{blockhash,jdbcType=CHAR}
+  </select>
+
+  <select id="selectRecentBlock" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from block
+    order by height desc
+    limit 5
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from block
+    where blockhash = #{blockhash,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.bitcoin.bitcoin.po.Block">
+    insert into block (blockhash, height, time,
+      transactions, miner, size,
+      outputtotal, merkleroot, estimated,
+      fees, difficulty, weight,
+      bits, version, nonce,
+      next_block, prev_block, blockreward
+      )
+    values (#{blockhash,jdbcType=CHAR}, #{height,jdbcType=INTEGER}, #{time,jdbcType=TIMESTAMP},
+      #{transactions,jdbcType=SMALLINT}, #{miner,jdbcType=VARCHAR}, #{size,jdbcType=REAL},
+      #{outputtotal,jdbcType=REAL}, #{merkleroot,jdbcType=CHAR}, #{estimated,jdbcType=REAL},
+      #{fees,jdbcType=REAL}, #{difficulty,jdbcType=DOUBLE}, #{weight,jdbcType=REAL},
+      #{bits,jdbcType=VARCHAR}, #{version,jdbcType=VARCHAR}, #{nonce,jdbcType=INTEGER},
+      #{nextBlock,jdbcType=CHAR}, #{prevBlock,jdbcType=CHAR}, #{blockreward,jdbcType=REAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.bitcoin.bitcoin.po.Block">
+    insert into block
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="blockhash != null">
+        blockhash,
+      </if>
+      <if test="height != null">
+        height,
+      </if>
+      <if test="time != null">
+        time,
+      </if>
+      <if test="transactions != null">
+        transactions,
+      </if>
+      <if test="miner != null">
+        miner,
+      </if>
+      <if test="size != null">
+        size,
+      </if>
+      <if test="outputtotal != null">
+        outputtotal,
+      </if>
+      <if test="merkleroot != null">
+        merkleroot,
+      </if>
+      <if test="estimated != null">
+        estimated,
+      </if>
+      <if test="fees != null">
+        fees,
+      </if>
+      <if test="difficulty != null">
+        difficulty,
+      </if>
+      <if test="weight != null">
+        weight,
+      </if>
+      <if test="bits != null">
+        bits,
+      </if>
+      <if test="version != null">
+        version,
+      </if>
+      <if test="nonce != null">
+        nonce,
+      </if>
+      <if test="nextBlock != null">
+        next_block,
+      </if>
+      <if test="prevBlock != null">
+        prev_block,
+      </if>
+      <if test="blockreward != null">
+        blockreward,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="blockhash != null">
+        #{blockhash,jdbcType=CHAR},
+      </if>
+      <if test="height != null">
+        #{height,jdbcType=INTEGER},
+      </if>
+      <if test="time != null">
+        #{time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="transactions != null">
+        #{transactions,jdbcType=SMALLINT},
+      </if>
+      <if test="miner != null">
+        #{miner,jdbcType=VARCHAR},
+      </if>
+      <if test="size != null">
+        #{size,jdbcType=REAL},
+      </if>
+      <if test="outputtotal != null">
+        #{outputtotal,jdbcType=REAL},
+      </if>
+      <if test="merkleroot != null">
+        #{merkleroot,jdbcType=CHAR},
+      </if>
+      <if test="estimated != null">
+        #{estimated,jdbcType=REAL},
+      </if>
+      <if test="fees != null">
+        #{fees,jdbcType=REAL},
+      </if>
+      <if test="difficulty != null">
+        #{difficulty,jdbcType=DOUBLE},
+      </if>
+      <if test="weight != null">
+        #{weight,jdbcType=REAL},
+      </if>
+      <if test="bits != null">
+        #{bits,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null">
+        #{version,jdbcType=VARCHAR},
+      </if>
+      <if test="nonce != null">
+        #{nonce,jdbcType=INTEGER},
+      </if>
+      <if test="nextBlock != null">
+        #{nextBlock,jdbcType=CHAR},
+      </if>
+      <if test="prevBlock != null">
+        #{prevBlock,jdbcType=CHAR},
+      </if>
+      <if test="blockreward != null">
+        #{blockreward,jdbcType=REAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bitcoin.bitcoin.po.Block">
+    update block
+    <set>
+      <if test="height != null">
+        height = #{height,jdbcType=INTEGER},
+      </if>
+      <if test="time != null">
+        time = #{time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="transactions != null">
+        transactions = #{transactions,jdbcType=SMALLINT},
+      </if>
+      <if test="miner != null">
+        miner = #{miner,jdbcType=VARCHAR},
+      </if>
+      <if test="size != null">
+        size = #{size,jdbcType=REAL},
+      </if>
+      <if test="outputtotal != null">
+        outputtotal = #{outputtotal,jdbcType=REAL},
+      </if>
+      <if test="merkleroot != null">
+        merkleroot = #{merkleroot,jdbcType=CHAR},
+      </if>
+      <if test="estimated != null">
+        estimated = #{estimated,jdbcType=REAL},
+      </if>
+      <if test="fees != null">
+        fees = #{fees,jdbcType=REAL},
+      </if>
+      <if test="difficulty != null">
+        difficulty = #{difficulty,jdbcType=DOUBLE},
+      </if>
+      <if test="weight != null">
+        weight = #{weight,jdbcType=REAL},
+      </if>
+      <if test="bits != null">
+        bits = #{bits,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null">
+        version = #{version,jdbcType=VARCHAR},
+      </if>
+      <if test="nonce != null">
+        nonce = #{nonce,jdbcType=INTEGER},
+      </if>
+      <if test="nextBlock != null">
+        next_block = #{nextBlock,jdbcType=CHAR},
+      </if>
+      <if test="prevBlock != null">
+        prev_block = #{prevBlock,jdbcType=CHAR},
+      </if>
+      <if test="blockreward != null">
+        blockreward = #{blockreward,jdbcType=REAL},
+      </if>
+    </set>
+    where blockhash = #{blockhash,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bitcoin.bitcoin.po.Block">
+    update block
+    set height = #{height,jdbcType=INTEGER},
+      time = #{time,jdbcType=TIMESTAMP},
+      transactions = #{transactions,jdbcType=SMALLINT},
+      miner = #{miner,jdbcType=VARCHAR},
+      size = #{size,jdbcType=REAL},
+      outputtotal = #{outputtotal,jdbcType=REAL},
+      merkleroot = #{merkleroot,jdbcType=CHAR},
+      estimated = #{estimated,jdbcType=REAL},
+      fees = #{fees,jdbcType=REAL},
+      difficulty = #{difficulty,jdbcType=DOUBLE},
+      weight = #{weight,jdbcType=REAL},
+      bits = #{bits,jdbcType=VARCHAR},
+      version = #{version,jdbcType=VARCHAR},
+      nonce = #{nonce,jdbcType=INTEGER},
+      next_block = #{nextBlock,jdbcType=CHAR},
+      prev_block = #{prevBlock,jdbcType=CHAR},
+      blockreward = #{blockreward,jdbcType=REAL}
+    where blockhash = #{blockhash,jdbcType=CHAR}
+  </update>
+</mapper>

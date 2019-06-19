@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bitcoin.bitcoin.dao.TransactionMapper">
+  <resultMap id="BaseResultMap" type="com.bitcoin.bitcoin.po.Transaction">
+    <id column="txhash" jdbcType="CHAR" property="txhash" />
+    <result column="time" jdbcType="TIMESTAMP" property="time" />
+    <result column="amount" jdbcType="REAL" property="amount" />
+    <result column="feeperbyte" jdbcType="REAL" property="feeperbyte" />
+    <result column="feeperweight" jdbcType="REAL" property="feeperweight" />
+    <result column="fees" jdbcType="REAL" property="fees" />
+    <result column="weight" jdbcType="SMALLINT" property="weight" />
+    <result column="totaloutput" jdbcType="REAL" property="totaloutput" />
+    <result column="totalinput" jdbcType="REAL" property="totalinput" />
+    <result column="size" jdbcType="SMALLINT" property="size" />
+    <result column="confirmations" jdbcType="SMALLINT" property="confirmations" />
+    <result column="visualize" jdbcType="VARCHAR" property="visualize" />
+    <result column="estimated" jdbcType="VARCHAR" property="estimated" />
+    <result column="blockhash" jdbcType="CHAR" property="blockhash" />
+    <result column="scripts" jdbcType="VARCHAR" property="scripts" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    txhash, time, amount, feeperbyte, feeperweight, fees, weight, totaloutput, totalinput, 
+    size, confirmations, visualize, estimated, blockhash, scripts
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from transaction
+    where txhash = #{txhash,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from transaction
+    where txhash = #{txhash,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.bitcoin.bitcoin.po.Transaction">
+    insert into transaction (txhash, time, amount, 
+      feeperbyte, feeperweight, fees, 
+      weight, totaloutput, totalinput, 
+      size, confirmations, visualize, 
+      estimated, blockhash, scripts
+      )
+    values (#{txhash,jdbcType=CHAR}, #{time,jdbcType=TIMESTAMP}, #{amount,jdbcType=REAL}, 
+      #{feeperbyte,jdbcType=REAL}, #{feeperweight,jdbcType=REAL}, #{fees,jdbcType=REAL}, 
+      #{weight,jdbcType=SMALLINT}, #{totaloutput,jdbcType=REAL}, #{totalinput,jdbcType=REAL}, 
+      #{size,jdbcType=SMALLINT}, #{confirmations,jdbcType=SMALLINT}, #{visualize,jdbcType=VARCHAR}, 
+      #{estimated,jdbcType=VARCHAR}, #{blockhash,jdbcType=CHAR}, #{scripts,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.bitcoin.bitcoin.po.Transaction">
+    insert into transaction
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="txhash != null">
+        txhash,
+      </if>
+      <if test="time != null">
+        time,
+      </if>
+      <if test="amount != null">
+        amount,
+      </if>
+      <if test="feeperbyte != null">
+        feeperbyte,
+      </if>
+      <if test="feeperweight != null">
+        feeperweight,
+      </if>
+      <if test="fees != null">
+        fees,
+      </if>
+      <if test="weight != null">
+        weight,
+      </if>
+      <if test="totaloutput != null">
+        totaloutput,
+      </if>
+      <if test="totalinput != null">
+        totalinput,
+      </if>
+      <if test="size != null">
+        size,
+      </if>
+      <if test="confirmations != null">
+        confirmations,
+      </if>
+      <if test="visualize != null">
+        visualize,
+      </if>
+      <if test="estimated != null">
+        estimated,
+      </if>
+      <if test="blockhash != null">
+        blockhash,
+      </if>
+      <if test="scripts != null">
+        scripts,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="txhash != null">
+        #{txhash,jdbcType=CHAR},
+      </if>
+      <if test="time != null">
+        #{time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="amount != null">
+        #{amount,jdbcType=REAL},
+      </if>
+      <if test="feeperbyte != null">
+        #{feeperbyte,jdbcType=REAL},
+      </if>
+      <if test="feeperweight != null">
+        #{feeperweight,jdbcType=REAL},
+      </if>
+      <if test="fees != null">
+        #{fees,jdbcType=REAL},
+      </if>
+      <if test="weight != null">
+        #{weight,jdbcType=SMALLINT},
+      </if>
+      <if test="totaloutput != null">
+        #{totaloutput,jdbcType=REAL},
+      </if>
+      <if test="totalinput != null">
+        #{totalinput,jdbcType=REAL},
+      </if>
+      <if test="size != null">
+        #{size,jdbcType=SMALLINT},
+      </if>
+      <if test="confirmations != null">
+        #{confirmations,jdbcType=SMALLINT},
+      </if>
+      <if test="visualize != null">
+        #{visualize,jdbcType=VARCHAR},
+      </if>
+      <if test="estimated != null">
+        #{estimated,jdbcType=VARCHAR},
+      </if>
+      <if test="blockhash != null">
+        #{blockhash,jdbcType=CHAR},
+      </if>
+      <if test="scripts != null">
+        #{scripts,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bitcoin.bitcoin.po.Transaction">
+    update transaction
+    <set>
+      <if test="time != null">
+        time = #{time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="amount != null">
+        amount = #{amount,jdbcType=REAL},
+      </if>
+      <if test="feeperbyte != null">
+        feeperbyte = #{feeperbyte,jdbcType=REAL},
+      </if>
+      <if test="feeperweight != null">
+        feeperweight = #{feeperweight,jdbcType=REAL},
+      </if>
+      <if test="fees != null">
+        fees = #{fees,jdbcType=REAL},
+      </if>
+      <if test="weight != null">
+        weight = #{weight,jdbcType=SMALLINT},
+      </if>
+      <if test="totaloutput != null">
+        totaloutput = #{totaloutput,jdbcType=REAL},
+      </if>
+      <if test="totalinput != null">
+        totalinput = #{totalinput,jdbcType=REAL},
+      </if>
+      <if test="size != null">
+        size = #{size,jdbcType=SMALLINT},
+      </if>
+      <if test="confirmations != null">
+        confirmations = #{confirmations,jdbcType=SMALLINT},
+      </if>
+      <if test="visualize != null">
+        visualize = #{visualize,jdbcType=VARCHAR},
+      </if>
+      <if test="estimated != null">
+        estimated = #{estimated,jdbcType=VARCHAR},
+      </if>
+      <if test="blockhash != null">
+        blockhash = #{blockhash,jdbcType=CHAR},
+      </if>
+      <if test="scripts != null">
+        scripts = #{scripts,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where txhash = #{txhash,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bitcoin.bitcoin.po.Transaction">
+    update transaction
+    set time = #{time,jdbcType=TIMESTAMP},
+      amount = #{amount,jdbcType=REAL},
+      feeperbyte = #{feeperbyte,jdbcType=REAL},
+      feeperweight = #{feeperweight,jdbcType=REAL},
+      fees = #{fees,jdbcType=REAL},
+      weight = #{weight,jdbcType=SMALLINT},
+      totaloutput = #{totaloutput,jdbcType=REAL},
+      totalinput = #{totalinput,jdbcType=REAL},
+      size = #{size,jdbcType=SMALLINT},
+      confirmations = #{confirmations,jdbcType=SMALLINT},
+      visualize = #{visualize,jdbcType=VARCHAR},
+      estimated = #{estimated,jdbcType=VARCHAR},
+      blockhash = #{blockhash,jdbcType=CHAR},
+      scripts = #{scripts,jdbcType=VARCHAR}
+    where txhash = #{txhash,jdbcType=CHAR}
+  </update>
+</mapper>
