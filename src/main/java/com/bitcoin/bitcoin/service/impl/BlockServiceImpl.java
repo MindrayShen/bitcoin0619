@@ -1,6 +1,6 @@
 package com.bitcoin.bitcoin.service.impl;
 
-import com.bitcoin.bitcoin.controller.BlockMapper;
+import com.bitcoin.bitcoin.dao.BlockMapper;
 import com.bitcoin.bitcoin.dto.BlockListDto;
 import com.bitcoin.bitcoin.po.Block;
 import com.bitcoin.bitcoin.service.BlockService;
