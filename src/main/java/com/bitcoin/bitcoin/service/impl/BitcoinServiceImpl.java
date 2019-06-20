@@ -44,7 +44,8 @@ public class BitcoinServiceImpl implements BitcoinService {
 
 
     @Override
-    public void syncBlockchainFromHash(String blockhash) throws Throwable {
+    @Async
+    public void syncBlockchainFromHash(String blockhash) throws Throwable  {
 
         logger.info("begin tp sync block from {}",blockhash);
 
@@ -58,7 +59,6 @@ public class BitcoinServiceImpl implements BitcoinService {
     }
 
     @Override
-    @Async
     @Transactional
     public String synBlock(String blockhash) throws Throwable {
 
@@ -150,8 +150,8 @@ public class BitcoinServiceImpl implements BitcoinService {
                 transaction_detail.setFinalbalance(null);
                 transaction_detail.setAmount(-utxoJSon.getFloat("value"));
                 transaction_detail.setAddress(null);
-                JSONObject scriptPubKey = jsonObject.getJSONObject("scriptPubKey");
-                JSONArray addresses = jsonObject.getJSONArray("addresses");
+                JSONObject scriptPubKey = utxoJSon.getJSONObject("scriptPubKey");
+                JSONArray addresses = scriptPubKey.getJSONArray("addresses");
                 if(addresses!=null) {
                     transaction_detail.setTransactionaddress(addresses.getString(0));
                 }
@@ -171,7 +171,7 @@ public class BitcoinServiceImpl implements BitcoinService {
             transaction_detail.setAmount(jsonObject.getFloat("value"));
             transaction_detail.setAddress(null);
             JSONObject scriptPubKey = jsonObject.getJSONObject("scriptPubKey");
-            JSONArray addresses = jsonObject.getJSONArray("addresses");
+            JSONArray addresses = scriptPubKey.getJSONArray("addresses");
             if(addresses!=null) {
                 transaction_detail.setTransactionaddress(addresses.getString(0));
             }
