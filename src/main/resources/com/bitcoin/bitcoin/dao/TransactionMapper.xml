@@ -28,6 +28,15 @@
     from transaction
     where txhash = #{txhash,jdbcType=CHAR}
   </select>
+
+  <select id="selectRecentTransaction" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from transaction
+    order by time desc
+    limit 5
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from transaction
     where txhash = #{txhash,jdbcType=CHAR}

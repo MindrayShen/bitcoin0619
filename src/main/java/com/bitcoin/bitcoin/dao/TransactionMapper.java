@@ -2,6 +2,8 @@ package com.bitcoin.bitcoin.dao;
 
 import com.bitcoin.bitcoin.po.Transaction;
 
+import java.util.List;
+
 public interface TransactionMapper {
     int deleteByPrimaryKey(String txhash);
 
@@ -14,4 +16,6 @@ public interface TransactionMapper {
     int updateByPrimaryKeySelective(Transaction record);
 
     int updateByPrimaryKey(Transaction record);
+
+    List<Transaction> selectRecentTransaction();
 }

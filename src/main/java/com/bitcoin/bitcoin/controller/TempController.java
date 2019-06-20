@@ -1,24 +1,26 @@
 package com.bitcoin.bitcoin.controller;
 
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.bitcoin.bitcoin.api.BitcoinJsonRpcApi;
 import com.bitcoin.bitcoin.api.BitcoinRestApi;
 import com.bitcoin.bitcoin.dto.BlockListDto;
+import com.bitcoin.bitcoin.dto.TransactionListDto;
+import com.bitcoin.bitcoin.po.Block;
 import com.bitcoin.bitcoin.service.BlockService;
-import com.googlecode.jsonrpc4j.JsonRpcHttpClient;
+import com.bitcoin.bitcoin.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.net.URL;
-import java.util.Base64;
-import java.util.HashMap;
 import java.util.List;
 
 @RestController
 @RequestMapping("/temp")
+@EnableAutoConfiguration
+@CrossOrigin
 public class TempController {
 
     /**
@@ -32,6 +34,9 @@ public class TempController {
 
     @Autowired
     private BlockService blockService;
+
+    @Autowired
+    private TransactionService transactionService;
 
     @GetMapping("/test")
     public String test() {
@@ -75,10 +80,28 @@ public class TempController {
         return null;
     }
 
-    @GetMapping("/test2")
-    public List<BlockListDto> test2(){
+    @GetMapping("/block")
+    public List<BlockListDto> block(){
         List<BlockListDto> recentBlocks = blockService.getRecentBlocks();
         return recentBlocks;
+    }
+
+    @GetMapping("/transaction")
+    public List<TransactionListDto> transaction(){
+        List<TransactionListDto> recentTransactions = transactionService.getRecentTransactions();
+        return recentTransactions;
+    }
+
+    @GetMapping("/blocklist")
+    public List<BlockListDto> blocklist(){
+
+        return null;
+    }
+
+    @GetMapping("/transactionlist")
+    public List<TransactionListDto> transactionlist(){
+
+        return null;
     }
 }
 

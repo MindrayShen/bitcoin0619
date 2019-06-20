@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -28,7 +29,11 @@ public class BlockServiceImpl implements BlockService {
             blockListDto.setSize(block.getSize());
             blockListDto.setMiner(block.getMiner());
             blockListDto.setHeight(block.getHeight());
-            blockListDto.setTime(block.getTime().getTime());
+            long nowtime = new Date().getTime();
+            long blocktime = block.getTime().getTime();
+            long l = nowtime - blocktime;
+            int a = (int) (l/1000/60);
+            blockListDto.setTime((long) a);
             list.add(blockListDto);
         }
 
