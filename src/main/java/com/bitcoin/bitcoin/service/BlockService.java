@@ -8,4 +8,5 @@ public interface BlockService {
 
     List<BlockListDto> getRecentBlocks();
 
+    List<BlockListDto> getRecentBlockList();
 }

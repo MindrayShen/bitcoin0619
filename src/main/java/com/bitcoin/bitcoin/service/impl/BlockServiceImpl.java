@@ -39,4 +39,9 @@ public class BlockServiceImpl implements BlockService {
 
         return list;
     }
+
+    @Override
+    public List<BlockListDto> getRecentBlockList() {
+        return null;
+    }
 }

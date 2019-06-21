@@ -10,11 +10,9 @@ import com.bitcoin.bitcoin.service.BlockService;
 import com.bitcoin.bitcoin.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -93,8 +91,11 @@ public class TempController {
     }
 
     @GetMapping("/blocklist")
-    public List<BlockListDto> blocklist(){
-
+    public List<BlockListDto> blocklist(@RequestParam Long age ){
+        Long a = age*60*1000;
+        long newtime = new Date().getTime();
+        Long time = newtime-a;
+        List<BlockListDto> recentBlockList = blockService.getRecentBlockList();
         return null;
     }
 
