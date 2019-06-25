@@ -7,6 +7,7 @@ import com.bitcoin.bitcoin.service.BlockService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -41,7 +42,29 @@ public class BlockServiceImpl implements BlockService {
     }
 
     @Override
-    public List<BlockListDto> getRecentBlockList() {
+    public List<BlockListDto> getRecentBlockList(Long time) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String format = simpleDateFormat.format(time);
+        StringBuffer stringBuffer = new StringBuffer(format);
+        StringBuffer stringBuffer1 = new StringBuffer(format);
+        String start = String.valueOf(stringBuffer.append(" 00:00:00"));
+        String end = String.valueOf(stringBuffer1.append(" 23:59:59"));
+        List<BlockListDto> blocklist = blockMapper.selectbetween(start,end);
+
+        return blocklist;
+    }
+
+    @Override
+    public Block getheight(Integer height) {
+
+        Block block = blockMapper.selectheight(height);
+
+        return block;
+    }
+
+    //todo selecttime
+    @Override
+    public List<BlockListDto> selecttime(long pretime) {
         return null;
     }
 }

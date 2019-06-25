@@ -1,6 +1,8 @@
 package com.bitcoin.bitcoin.dao;
 
+import com.bitcoin.bitcoin.dto.BlockListDto;
 import com.bitcoin.bitcoin.po.Block;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -19,4 +21,9 @@ public interface BlockMapper {
 
     //SELECT *
     List<Block> selectRecentBlock();
+
+    //SELECT between
+    List<BlockListDto> selectbetween(@Param("start") String start,@Param("end") String end);
+
+    Block selectheight(Integer height);
 }

@@ -3,11 +3,15 @@ package com.bitcoin.bitcoin.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.bitcoin.bitcoin.api.BitcoinJsonRpcApi;
 import com.bitcoin.bitcoin.api.BitcoinRestApi;
+import com.bitcoin.bitcoin.dao.TransactionMapper;
 import com.bitcoin.bitcoin.dto.BlockListDto;
 import com.bitcoin.bitcoin.dto.TransactionListDto;
 import com.bitcoin.bitcoin.po.Block;
+import com.bitcoin.bitcoin.po.Transaction;
+import com.bitcoin.bitcoin.po.Transaction_detail;
 import com.bitcoin.bitcoin.service.BlockService;
 import com.bitcoin.bitcoin.service.TransactionService;
+import com.bitcoin.bitcoin.service.Transaction_detailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.web.bind.annotation.*;
@@ -35,6 +39,9 @@ public class TempController {
 
     @Autowired
     private TransactionService transactionService;
+
+    @Autowired
+    private Transaction_detailService transaction_detailService;
 
     @GetMapping("/test")
     public String test() {
@@ -91,18 +98,67 @@ public class TempController {
     }
 
     @GetMapping("/blocklist")
-    public List<BlockListDto> blocklist(@RequestParam Long age ){
-        Long a = age*60*1000;
+    public List<BlockListDto> blocklist(){
         long newtime = new Date().getTime();
-        Long time = newtime-a;
-        List<BlockListDto> recentBlockList = blockService.getRecentBlockList();
-        return null;
+        List<BlockListDto> recentBlockLi3st = blockService.getRecentBlockList(newtime);
+        return recentBlockLi3st;
     }
 
+    //todo transaction
     @GetMapping("/transactionlist")
     public List<TransactionListDto> transactionlist(){
+        long newtime = new Date().getTime();
+        List<Transaction> recentBlockList = transactionService.getRecentTransactionList(newtime);
 
         return null;
     }
-}
 
+    @GetMapping("/sreach")
+    public Object sreach(@RequestParam String sreach ){
+
+        if(sreach.length()<8){
+            if(sreach.matches("^/d+$")){
+                //高度
+                int height = Integer.parseInt(sreach);
+                Block block = blockService.getheight(height);
+                return block;
+            }
+        }else if(sreach.length()==64){
+            if(sreach.matches("^/d+||[a-f]+$")){
+                //Hash
+                Object hash = transactionService.selectSreach(sreach);
+
+                return hash;
+            }
+        }else {
+            //地址
+            Transaction_detail transaction_detail = transaction_detailService.selectaddress(sreach);
+            return transaction_detail;
+        }
+
+        return null;
+
+    }
+
+    @GetMapping("/preblock")
+    public List<BlockListDto> preblock(){
+
+        long time = new Date().getTime();
+        long pretime = time-86400000;
+        List<BlockListDto> blockListDtoList = blockService.selecttime(pretime);
+
+        return blockListDtoList;
+
+    }
+
+    @GetMapping("/nextblock")
+    public List<BlockListDto> nextblock(){
+
+        long time = new Date().getTime();
+        long pretime = time+86400000;
+        List<BlockListDto> blockListDtoList = blockService.selecttime(pretime);
+
+        return blockListDtoList;
+
+    }
+}

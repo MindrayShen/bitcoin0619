@@ -26,18 +26,32 @@
     fees, difficulty, weight, bits, version, nonce, next_block, prev_block, blockreward
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+  select
+  <include refid="Base_Column_List" />
+  from block
+  where blockhash = #{blockhash,jdbcType=CHAR}
+</select>
+
+  <select id="selectheight" parameterType="java.lang.Ingeter" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from block
-    where blockhash = #{blockhash,jdbcType=CHAR}
+    where height = #{height}
+  </select>
+
+  <select id="selectbetween" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from block
+    where time between #{start} and #{end}
   </select>
 
   <select id="selectRecentBlock" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from block
-    order by height desc
-    limit 5
+  select
+  <include refid="Base_Column_List" />
+  from block
+  order by height desc
+  limit 5
   </select>
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">

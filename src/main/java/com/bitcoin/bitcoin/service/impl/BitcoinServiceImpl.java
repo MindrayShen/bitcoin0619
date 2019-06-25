@@ -78,7 +78,7 @@ public class BitcoinServiceImpl implements BitcoinService {
             block.setOutputtotal(null);
             block.setPrevBlock(blockedil.getString("previousblockhash"));
             block.setSize(blockedil.getFloat("size"));
-            block.setTime(new Date(blockedil.getLong("time")*1000));
+            block.setTime(new Date(blockedil.getLong("time")));
             block.setTransactions(blockedil.getShort("nTx"));
             block.setVersion(blockedil.getString("version"));
             block.setWeight(blockedil.getFloat("weight"));
@@ -92,7 +92,7 @@ public class BitcoinServiceImpl implements BitcoinService {
 
                 JSONObject jsonObject = new JSONObject((LinkedHashMap) txobj);
 
-                syncTx(jsonObject,blockhash,new Date(blockedil.getLong("time")*1000),confirmations);
+                syncTx(jsonObject,blockhash,new Date(blockedil.getLong("time")),confirmations);
 
             }
 
