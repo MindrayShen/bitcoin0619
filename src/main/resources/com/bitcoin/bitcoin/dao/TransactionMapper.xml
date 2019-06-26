@@ -29,6 +29,15 @@
     where txhash = #{txhash,jdbcType=CHAR}
   </select>
 
+  <select id="selectbetween" parameterType="java.lang.String" resultType="com.bitcoin.bitcoin.dto.TransactionAndDetailList">
+    select
+    <include refid="Base_Column_List" />
+    from transaction
+    where time between #{start} and #{end}
+    order by time desc
+    limit 10
+  </select>
+
   <select id="selectRecentTransaction" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
@@ -45,7 +54,8 @@
     insert into transaction (txhash, time, amount, 
       feeperbyte, feeperweight, fees, 
       weight, totaloutput, totalinput, 
-      size, confirmations, visualize, 
+      size, confirmations, vis0 +
+      alize,
       estimated, blockhash, scripts
       )
     values (#{txhash,jdbcType=CHAR}, #{time,jdbcType=TIMESTAMP}, #{amount,jdbcType=REAL}, 

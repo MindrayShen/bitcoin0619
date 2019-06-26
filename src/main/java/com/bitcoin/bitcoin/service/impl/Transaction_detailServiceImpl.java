@@ -5,7 +5,9 @@ import com.bitcoin.bitcoin.po.Transaction_detail;
 import com.bitcoin.bitcoin.service.TransactionService;
 import com.bitcoin.bitcoin.service.Transaction_detailService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class Transaction_detailServiceImpl implements Transaction_detailService {
 
     @Autowired

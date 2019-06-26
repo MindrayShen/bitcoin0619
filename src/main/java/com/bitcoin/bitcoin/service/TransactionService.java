@@ -1,5 +1,7 @@
 package com.bitcoin.bitcoin.service;
 
+import com.bitcoin.bitcoin.dto.SreachGetDto;
+import com.bitcoin.bitcoin.dto.TransactionAndDetailList;
 import com.bitcoin.bitcoin.dto.TransactionListDto;
 import com.bitcoin.bitcoin.po.Transaction;
 
@@ -9,7 +11,7 @@ public interface TransactionService {
 
     List<TransactionListDto> getRecentTransactions();
 
-    List<Transaction> getRecentTransactionList(long newtime);
+    List<TransactionAndDetailList> getRecentTransactionList(long newtime);
 
-    Object selectSreach(String sreach);
+    SreachGetDto selectSreach(String sreach);
 }

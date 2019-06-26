@@ -61,10 +61,4 @@ public class BlockServiceImpl implements BlockService {
 
         return block;
     }
-
-    //todo selecttime
-    @Override
-    public List<BlockListDto> selecttime(long pretime) {
-        return null;
-    }
 }

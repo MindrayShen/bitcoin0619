@@ -1,12 +1,19 @@
 package com.bitcoin.bitcoin.service.impl;
 
+import com.bitcoin.bitcoin.dao.BlockMapper;
 import com.bitcoin.bitcoin.dao.TransactionMapper;
+import com.bitcoin.bitcoin.dao.Transaction_detailMapper;
+import com.bitcoin.bitcoin.dto.SreachGetDto;
+import com.bitcoin.bitcoin.dto.TransactionAndDetailList;
 import com.bitcoin.bitcoin.dto.TransactionListDto;
+import com.bitcoin.bitcoin.po.Block;
 import com.bitcoin.bitcoin.po.Transaction;
+import com.bitcoin.bitcoin.po.Transaction_detail;
 import com.bitcoin.bitcoin.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -17,6 +24,12 @@ public class TransactionServiceImpl implements TransactionService
 
     @Autowired
     private TransactionMapper transactionMapper;
+
+    @Autowired
+    private Transaction_detailMapper transaction_detailMapper;
+
+    @Autowired
+    private BlockMapper blockMapper;
 
     @Override
     public List<TransactionListDto> getRecentTransactions() {
@@ -36,16 +49,47 @@ public class TransactionServiceImpl implements TransactionService
         return list;
     }
 
-    //todo RecentTransactionList
     @Override
-    public List<Transaction> getRecentTransactionList(long newtime) {
-        return null;
+    public List<TransactionAndDetailList> getRecentTransactionList(long newtime) {
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String format = simpleDateFormat.format(newtime);
+        StringBuffer stringBuffer = new StringBuffer(format);
+        StringBuffer stringBuffer1 = new StringBuffer(format);
+        String start = String.valueOf(stringBuffer.append(" 00:00:00"));
+        String end = String.valueOf(stringBuffer1.append(" 23:59:59"));
+        List<TransactionAndDetailList> transactionAndDetailLists = transactionMapper.selectbetween(start,end);
+
+        for (TransactionAndDetailList t:transactionAndDetailLists) {
+            String txhash = t.getTxhash();
+            List<Transaction_detail> transaction_details = transaction_detailMapper.selectByTxHash(txhash);
+            t.setTransaction_details(transaction_details);
+
+        }
+
+        return transactionAndDetailLists;
     }
 
     //todo selectSreach
     @Override
-    public Object selectSreach(String sreach) {
-        return null;
+    public SreachGetDto selectSreach(String sreach) {
+
+        Block block = blockMapper.selectByPrimaryKey(sreach);
+        if(block==null){
+            Transaction transaction = transactionMapper.selectByPrimaryKey(sreach);
+            if (transaction==null){
+                return null;
+            }else {
+                SreachGetDto sreachGetDto = new SreachGetDto();
+                sreachGetDto.setObject(transaction);
+                sreachGetDto.setURL("transaction.html");
+                return sreachGetDto;
+            }
+        }
+        SreachGetDto sreachGetDto = new SreachGetDto();
+        sreachGetDto.setObject(block);
+        sreachGetDto.setURL("transaction.html");
+        return sreachGetDto;
     }
 
 }

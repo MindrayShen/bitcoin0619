@@ -4,8 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.bitcoin.bitcoin.api.BitcoinJsonRpcApi;
 import com.bitcoin.bitcoin.api.BitcoinRestApi;
 import com.bitcoin.bitcoin.dao.TransactionMapper;
-import com.bitcoin.bitcoin.dto.BlockListDto;
-import com.bitcoin.bitcoin.dto.TransactionListDto;
+import com.bitcoin.bitcoin.dto.*;
 import com.bitcoin.bitcoin.po.Block;
 import com.bitcoin.bitcoin.po.Transaction;
 import com.bitcoin.bitcoin.po.Transaction_detail;
@@ -42,6 +41,7 @@ public class TempController {
 
     @Autowired
     private Transaction_detailService transaction_detailService;
+
 
     @GetMapping("/test")
     public String test() {
@@ -98,67 +98,77 @@ public class TempController {
     }
 
     @GetMapping("/blocklist")
-    public List<BlockListDto> blocklist(){
+    public BlockTimeGetDto blocklist(){
         long newtime = new Date().getTime();
         List<BlockListDto> recentBlockLi3st = blockService.getRecentBlockList(newtime);
-        return recentBlockLi3st;
+        BlockTimeGetDto blockTimeGetDto = new BlockTimeGetDto();
+        blockTimeGetDto.setBlockListDtoList(recentBlockLi3st);
+        blockTimeGetDto.setTime(newtime);
+        return blockTimeGetDto;
     }
 
     //todo transaction
     @GetMapping("/transactionlist")
-    public List<TransactionListDto> transactionlist(){
+    public List<TransactionAndDetailList> transactionlist(){
         long newtime = new Date().getTime();
-        List<Transaction> recentBlockList = transactionService.getRecentTransactionList(newtime);
+        List<TransactionAndDetailList> transactionAndDetailLists = transactionService.getRecentTransactionList(newtime);
 
-        return null;
+        return transactionAndDetailLists;
     }
 
     @GetMapping("/sreach")
-    public Object sreach(@RequestParam String sreach ){
+    public SreachGetDto sreach(@RequestParam String sreach ){
 
         if(sreach.length()<8){
-            if(sreach.matches("^/d+$")){
+            if(sreach.matches("^\\d+$")){
                 //高度
                 int height = Integer.parseInt(sreach);
                 Block block = blockService.getheight(height);
-                return block;
+                SreachGetDto sreachGetDto = new SreachGetDto();
+                sreachGetDto.setObject(block);
+                sreachGetDto.setURL("block.html");
+                return  sreachGetDto;
             }
         }else if(sreach.length()==64){
-            if(sreach.matches("^/d+||[a-f]+$")){
+            if(sreach.matches("^\\d+||[a-f]+$")){
                 //Hash
-                Object hash = transactionService.selectSreach(sreach);
-
-                return hash;
+                SreachGetDto sreachGetDto = transactionService.selectSreach(sreach);
+                return sreachGetDto;
             }
         }else {
             //地址
             Transaction_detail transaction_detail = transaction_detailService.selectaddress(sreach);
-            return transaction_detail;
+            SreachGetDto sreachGetDto = new SreachGetDto();
+            sreachGetDto.setObject(transaction_detail);
+            sreachGetDto.setURL("transaction_detail");
+            return sreachGetDto;
         }
 
         return null;
-
     }
 
     @GetMapping("/preblock")
-    public List<BlockListDto> preblock(){
+    public BlockTimeGetDto preblock(@RequestParam Long time){
 
-        long time = new Date().getTime();
         long pretime = time-86400000;
-        List<BlockListDto> blockListDtoList = blockService.selecttime(pretime);
-
-        return blockListDtoList;
+        List<BlockListDto> blockListDtoList = blockService.getRecentBlockList(pretime);
+        BlockTimeGetDto blockTimeGetDto = new BlockTimeGetDto();
+        blockTimeGetDto.setBlockListDtoList(blockListDtoList);
+        blockTimeGetDto.setTime(pretime);
+        return blockTimeGetDto;
 
     }
 
     @GetMapping("/nextblock")
-    public List<BlockListDto> nextblock(){
+    public BlockTimeGetDto nextblock(@RequestParam Long time){
 
-        long time = new Date().getTime();
-        long pretime = time+86400000;
-        List<BlockListDto> blockListDtoList = blockService.selecttime(pretime);
+        long nexttime = time+86400000;
+        List<BlockListDto> blockListDtoList = blockService.getRecentBlockList(nexttime);
+        BlockTimeGetDto blockTimeGetDto = new BlockTimeGetDto();
+        blockTimeGetDto.setBlockListDtoList(blockListDtoList);
+        blockTimeGetDto.setTime(nexttime);
 
-        return blockListDtoList;
+        return blockTimeGetDto;
 
     }
 }

@@ -12,6 +12,4 @@ public interface BlockService {
     List<BlockListDto> getRecentBlockList(Long time);
 
     Block getheight(Integer height);
-
-    List<BlockListDto> selecttime(long pretime);
 }
