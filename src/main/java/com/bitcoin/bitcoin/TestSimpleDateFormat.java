@@ -12,12 +12,13 @@ public class TestSimpleDateFormat {
 //        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 //        String a = simpleDateFormat.format(date.getTime());
 //        System.out.println(a);
-        String sreach="123456789";
+        String sreach="qwe";
         if(sreach.matches("^\\d+$")){
             //高度
-            Integer.parseInt(sreach);
+//            Integer.parseInt(sreach);
+            System.out.println("123");
         }
-            Integer.parseInt(sreach);
+//            Integer.parseInt(sreach);
     }
 
 }

@@ -126,21 +126,23 @@ public class TempController {
                 Block block = blockService.getheight(height);
                 SreachGetDto sreachGetDto = new SreachGetDto();
                 sreachGetDto.setObject(block);
-                sreachGetDto.setURL("block.html");
+                sreachGetDto.setURL("block.html?object=");
                 return  sreachGetDto;
             }
+            return null;
         }else if(sreach.length()==64){
-            if(sreach.matches("^\\d+||[a-f]+$")){
+            if(sreach.matches("^[0-9a-f]+$")){
                 //Hash
                 SreachGetDto sreachGetDto = transactionService.selectSreach(sreach);
                 return sreachGetDto;
             }
-        }else {
+            return null;
+        }else if(sreach.length()>10&&sreach.length()<50){
             //地址
             Transaction_detail transaction_detail = transaction_detailService.selectaddress(sreach);
             SreachGetDto sreachGetDto = new SreachGetDto();
             sreachGetDto.setObject(transaction_detail);
-            sreachGetDto.setURL("transaction_detail");
+            sreachGetDto.setURL("transaction_detail.html?object=");
             return sreachGetDto;
         }
 

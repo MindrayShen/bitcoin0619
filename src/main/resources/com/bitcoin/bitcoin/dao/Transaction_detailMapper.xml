@@ -23,11 +23,25 @@
     where tx_detail_id = #{txDetailId,jdbcType=BIGINT}
   </select>
 
-  <select id="selectByTxHash" parameterType="java.lang.String" resultType="com.bitcoin.bitcoin.dto.TransactionAndDetailList">
+  <select id="selectByTxHash" parameterType="java.lang.String" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from transaction_detail
     where txhash = #{txhash}
+  </select>
+
+  <select id="selectAmount" parameterType="java.lang.String" resultType="Float">
+    select
+    sum(amount)
+    from transaction_detail
+    where txhash = #{txhash}
+  </select>
+
+  <select id="selectByAddress" parameterType="java.lang.String" resultType="com.bitcoin.bitcoin.po.Transaction_detail">
+    select
+    <include refid="Base_Column_List" />
+    from transaction_detail
+    where transactionaddress = #{sreach}
   </select>
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">

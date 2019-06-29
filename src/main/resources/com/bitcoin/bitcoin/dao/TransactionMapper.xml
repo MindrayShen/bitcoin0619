@@ -54,8 +54,7 @@
     insert into transaction (txhash, time, amount, 
       feeperbyte, feeperweight, fees, 
       weight, totaloutput, totalinput, 
-      size, confirmations, vis0 +
-      alize,
+      size, confirmations, visualize,
       estimated, blockhash, scripts
       )
     values (#{txhash,jdbcType=CHAR}, #{time,jdbcType=TIMESTAMP}, #{amount,jdbcType=REAL}, 

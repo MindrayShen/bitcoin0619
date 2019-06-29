@@ -19,4 +19,8 @@ public interface Transaction_detailMapper {
     int updateByPrimaryKey(Transaction_detail record);
 
     List<Transaction_detail> selectByTxHash(@Param("txhash") String txhash);
+
+    Transaction_detail selectByAddress(@Param("sreach")String sreach);
+
+    Float selectAmount(@Param("txhash") String txhash);
 }

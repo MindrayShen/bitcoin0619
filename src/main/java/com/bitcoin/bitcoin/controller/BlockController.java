@@ -78,7 +78,7 @@ public class BlockController {
 //        }
 
         //下面是同步数据库的
-        String blockhash="0000000000000222a61c0000e6af9c1a862ba9efa80622f50720cee053c453f8";
+        String blockhash="0000000000000288d34761f53a4ed29331bbd517a0096d4b33a56ddb83c6b2fc";
         bitcoinService.syncBlockchainFromHash(blockhash);
 
 

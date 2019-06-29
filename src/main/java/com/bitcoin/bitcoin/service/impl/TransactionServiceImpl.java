@@ -44,6 +44,8 @@ public class TransactionServiceImpl implements TransactionService
             long l = nowtime - transactionListDtotime;
             int a = (int) (l/1000/60);
             transactionListDto.setTime((long) a);
+            Float amount = transaction_detailMapper.selectAmount(tx.getTxhash());
+            transactionListDto.setAmount(amount*-1);
             list.add(transactionListDto);
         }
         return list;
@@ -82,13 +84,13 @@ public class TransactionServiceImpl implements TransactionService
             }else {
                 SreachGetDto sreachGetDto = new SreachGetDto();
                 sreachGetDto.setObject(transaction);
-                sreachGetDto.setURL("transaction.html");
+                sreachGetDto.setURL("transaction.html?object=");
                 return sreachGetDto;
             }
         }
         SreachGetDto sreachGetDto = new SreachGetDto();
         sreachGetDto.setObject(block);
-        sreachGetDto.setURL("transaction.html");
+        sreachGetDto.setURL("block.html?object=");
         return sreachGetDto;
     }
 
