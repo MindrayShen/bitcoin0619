@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="assets/css/elementui.css">
+    <title>Demo</title>
+</head>
+
+<body>
+    <div id="app">
+
+        <el-container>
+            <el-aside width="100%">
+                <h1>Block #{{block.height}}</h1>
+                <el-table ref="singleTable" :data="blockdata" highlight-current-row
+                    @current-change="handleCurrentChange" style="width: 100%">
+                    <el-table-column property="blockhash" label="Hash" width="200">
+                    </el-table-column>
+                    <el-table-column property="height" label="Height" width="120">
+                    </el-table-column>
+                    <el-table-column property="time" label="Time">
+                    </el-table-column>
+                    <el-table-column property="bits" label="Bits">
+                    </el-table-column>
+                    <el-table-column property="blockreward" label="blockreward">
+                    </el-table-column>
+                    <el-table-column property="difficulty" label="difficulty">
+                    </el-table-column>
+                    <el-table-column property="estimated" label="estimated">
+                    </el-table-column>
+                    <el-table-column property="fees" label="fees">
+                    </el-table-column>
+                    <el-table-column property="merkleroot" label="merkleroot">
+                    </el-table-column>
+                    <el-table-column property="miner" label="miner">
+                    </el-table-column>
+                    <el-table-column property="nextBlock" label="nextBlock">
+                    </el-table-column>
+                    <el-table-column property="nonce" label="nonce">
+                    </el-table-column>
+                    <el-table-column property="outputtotal" label="outputtotal">
+                    </el-table-column>
+                    <el-table-column property="prevBlock" label="prevBlock">
+                    </el-table-column>
+                    <el-table-column property="size" label="size">
+                    </el-table-column>
+                    <el-table-column property="transactions" label="transactions">
+                    </el-table-column>
+                    <el-table-column property="version" label="version">
+                    </el-table-column>
+                    <el-table-column property="weight" label="weight">
+                    </el-table-column>
+                </el-table>
+
+            </el-aside>
+
+            <el-main>
+
+            </el-main>
+        </el-container>
+
+    </div>
+
+    <script src="assets/js/axios.min.js"></script>
+    <script src="assets/js/common.js"></script>
+    <script src="assets/js/vue.js"></script>
+    <script src="assets/js/elementui.js"></script>
+    <script src="viewmodels/block.js"></script>
+
+</body>
+
+</html>

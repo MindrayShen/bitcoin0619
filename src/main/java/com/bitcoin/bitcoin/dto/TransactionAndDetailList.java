@@ -6,7 +6,7 @@ import com.bitcoin.bitcoin.po.Transaction_detail;
 import java.util.Date;
 import java.util.List;
 
-public class TransactionAndDetailList {
+public class  TransactionAndDetailList {
 
     private String txhash;
 

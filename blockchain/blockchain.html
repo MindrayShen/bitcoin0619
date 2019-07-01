@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="assets/css/elementui.css">
+    <title>BlockChain</title>
+</head>
+
+<body>
+    <div id="app">
+        <div style="text-align:center">
+            <el-input v-model="input" placeholder="height blockHash trsactionHash Address" style="width: 60%"></el-input>
+            <el-button type="primary" :disabled="input==''" @click="selectinput">search</el-button>
+        </div>
+        <template>
+            <el-tabs v-model="activeName" @tab-click="handleClick">
+                <el-tab-pane label="Block" name="first">
+                    <el-table ref="singleTable" :data="blockdata" stripe highlight-current-row
+                        @current-change="handleCurrentChangeblock" style="width: 100%">
+                        <el-table-column property="height" label="Height" width="120">
+                        </el-table-column>
+                        <el-table-column property="time" label="Age" width="120">
+                        </el-table-column>
+                        <el-table-column property="transactions" label="Transaction">
+                        </el-table-column>
+                        <el-table-column property="miner" label="Miner">
+                        </el-table-column>
+                        <el-table-column property="size" label="Size(bytes)">
+                        </el-table-column>
+                    </el-table>
+                    <div style="text-align:center">
+                        <el-button type="primary" plain style="align-self: center" @click="blockclick">View More</el-button>
+                    </div>
+                </el-tab-pane>
+                <el-tab-pane label="Trsaction" name="second">
+                    <el-table ref="singleTable" :data="transactiondata" stripe highlight-current-row
+                        @current-change="handleCurrentChangetx" style="width: 100%">
+                        <el-table-column property="txhash" label="Transaction Hash" width="500">
+                        </el-table-column>
+                        <el-table-column property="time" label="Age">
+                        </el-table-column>
+                        <el-table-column property="amount" label="Amount(BTC)">
+                        </el-table-column>
+                        <el-table-column property="amount" label="Amount(USD)">
+                        </el-table-column>
+                    </el-table>
+                    <div style="text-align:center">
+                        <el-button type="primary" plain style="align-self: center" @click="transactionclick">View More</el-button>
+                    </div>
+                </el-tab-pane>
+            </el-tabs>
+        </template>
+
+    </div>
+
+    <script src="assets/js/axios.min.js"></script>
+    <script src="assets/js/common.js"></script>
+    <script src="assets/js/vue.js"></script>
+    <script src="assets/js/elementui.js"></script>
+    <script src="viewmodels/blockchain.js"></script>
+
+</body>
+
+</html>
